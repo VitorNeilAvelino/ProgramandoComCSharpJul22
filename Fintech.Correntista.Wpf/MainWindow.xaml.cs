@@ -1,18 +1,7 @@
 ﻿using Fintech.Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Fintech.Correntista.Wpf
 {
@@ -21,10 +10,11 @@ namespace Fintech.Correntista.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Cliente> Clientes { get; set; }
+        public List<Cliente> Clientes { get; set; } = new List<Cliente>();
 
         public MainWindow()
         {
+            //Clientes = new List<Cliente>();
             InitializeComponent();
             PopularControles();
         }
@@ -34,6 +24,8 @@ namespace Fintech.Correntista.Wpf
             sexoComboBox.Items.Add(Sexo.Feminino);
             sexoComboBox.Items.Add(Sexo.Masculino);
             sexoComboBox.Items.Add(Sexo.Outro);
+
+            clienteDataGrid.ItemsSource = Clientes;
         }
 
         private void incluirClienteButton_Click(object sender, RoutedEventArgs e)
@@ -60,11 +52,25 @@ namespace Fintech.Correntista.Wpf
 
             pesquisaClienteTabItem.Focus();
 
+            LimparControlesCliente();
+
             //var nome = "Vítor";
             //nome = 10;
             //object meuObjeto = 2;
             //meuObjeto = "Texto";
             //meuObjeto = false;
+        }
+
+        private void LimparControlesCliente()
+        {
+            cpfTextBox.Clear();
+            nomeTextBox.Text = "";
+            dataNascimentoTextBox.Text = null;
+            sexoComboBox.SelectedIndex = -1;
+            logradouroTextBox.Text = string.Empty;
+            numeroLogradouroTextBox.Clear();
+            bairroTextBox.Clear();
+            cepTextBox.Clear();
         }
     }
 }
