@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Fintech.Correntista.Wpf
 {
@@ -11,6 +12,7 @@ namespace Fintech.Correntista.Wpf
     public partial class MainWindow : Window
     {
         public List<Cliente> Clientes { get; set; } = new List<Cliente>();
+        public Cliente ClienteSelecionado { get; set; }
 
         public MainWindow()
         {
@@ -26,6 +28,17 @@ namespace Fintech.Correntista.Wpf
             sexoComboBox.Items.Add(Sexo.Outro);
 
             clienteDataGrid.ItemsSource = Clientes;
+
+            var banco1 = new Banco();
+            banco1.Numero = 1;
+            banco1.Nome = "Banco Um";
+
+            bancoComboBox.Items.Add(banco1);
+            bancoComboBox.Items.Add(new Banco { Numero = 2, Nome = "Banco Dois" });
+
+            tipoContaComboBox.Items.Add(TipoConta.ContaCorrente);
+            tipoContaComboBox.Items.Add(TipoConta.ContaEspecial);
+            tipoContaComboBox.Items.Add(TipoConta.Poupanca);
         }
 
         private void incluirClienteButton_Click(object sender, RoutedEventArgs e)
@@ -41,7 +54,7 @@ namespace Fintech.Correntista.Wpf
             endereco.Numero = numeroLogradouroTextBox.Text;
             endereco.Bairro = bairroTextBox.Text;
             endereco.Logradouro = logradouroTextBox.Text;
-            
+
             cliente.EnderecoResidencial = endereco;
 
             Clientes.Add(cliente);
@@ -71,6 +84,33 @@ namespace Fintech.Correntista.Wpf
             numeroLogradouroTextBox.Clear();
             bairroTextBox.Clear();
             cepTextBox.Clear();
+        }
+
+        private void SelecionarClienteButtonClick(object sender, RoutedEventArgs e)
+        {
+            var botaoClicado = (Button)sender;
+            var clienteSelecionado = botaoClicado.DataContext;
+
+            ClienteSelecionado = (Cliente)clienteSelecionado;
+
+            clienteTextBox.Text = $"{ClienteSelecionado.Nome} - {ClienteSelecionado.Cpf}";
+
+            contasTabItem.Focus();
+        }
+
+        private void tipoContaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var tipoConta = (TipoConta)tipoContaComboBox.SelectedItem;
+
+            if (tipoConta == TipoConta.ContaEspecial)
+            {
+                limiteDockPanel.Visibility = Visibility.Visible;
+                limiteTextBox.Focus();
+            }
+            else
+            {
+                limiteDockPanel.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
