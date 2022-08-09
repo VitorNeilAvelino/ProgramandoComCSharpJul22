@@ -20,7 +20,7 @@ namespace Fintech.Repositorios.SistemaArquivos.Tests
             var movimento = new Movimento(200, Operacao.Saque);
             movimento.Conta = conta;
             
-            var repositorio = new MovimentoRepositorio();
+            var repositorio = new MovimentoRepositorio("Dados\\Movimento.txt");
             repositorio.Inserir(movimento);
         }
     }
