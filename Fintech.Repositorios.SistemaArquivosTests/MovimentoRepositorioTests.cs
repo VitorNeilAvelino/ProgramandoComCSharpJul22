@@ -12,16 +12,28 @@ namespace Fintech.Repositorios.SistemaArquivos.Tests
     [TestClass()]
     public class MovimentoRepositorioTests
     {
+        MovimentoRepositorio repositorio = new ("Dados\\Movimento.txt");
+
         [TestMethod()]
         public void InserirTest()
         {
             var conta = new ContaCorrente(new Agencia { Numero = 123 }, 526, "1");
-            
-            var movimento = new Movimento(200, Operacao.Saque);
+
+            var movimento = new Movimento(500, Operacao.Deposito);
             movimento.Conta = conta;
-            
-            var repositorio = new MovimentoRepositorio("Dados\\Movimento.txt");
+
             repositorio.Inserir(movimento);
+        }
+
+        [TestMethod()]
+        public void SelecionarTest()
+        {
+            var movimentos = repositorio.Selecionar(123, 526);
+
+            foreach (var movimento in movimentos)
+            {
+                Console.WriteLine($"{movimento.Data} - {movimento.Operacao} - {movimento.Valor:c}");
+            }
         }
     }
 }

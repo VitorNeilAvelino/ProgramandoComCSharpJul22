@@ -34,14 +34,25 @@ namespace Fintech.Repositorios.SistemaArquivos
 
             foreach (var linha in File.ReadAllLines(Caminho))
             {
+                if (linha == string.Empty) continue;
+
                 var propriedades = linha.Split('|');
 
-                var guid = propriedades[0];
-                var propriedadeNumeroAgencia = propriedades[1];
-                var propriedadeNumeroConta = propriedades[2];
-                var data = propriedades[3];
-                var operacao = propriedades[4];
-                var valor = propriedades[5];
+                var guid = new Guid(propriedades[0]);
+                var propriedadeNumeroAgencia = Convert.ToInt32(propriedades[1]);
+                var propriedadeNumeroConta = Convert.ToInt32(propriedades[2]);
+                var data = Convert.ToDateTime(propriedades[3]);
+                var operacao = (Operacao)Convert.ToInt32(propriedades[4]);
+                var valor = Convert.ToDecimal(propriedades[5]);
+
+                if (numeroAgencia == propriedadeNumeroAgencia && numeroConta == propriedadeNumeroConta)
+                {
+                    var movimento = new Movimento(valor, operacao);
+                    movimento.Guid = guid;
+                    movimento.Data = data;
+
+                    movimentos.Add(movimento); 
+                }
             }
 
             return movimentos;
