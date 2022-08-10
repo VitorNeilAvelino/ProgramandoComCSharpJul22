@@ -3,6 +3,7 @@ using Fintech.Repositorios.SistemaArquivos;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -200,16 +201,21 @@ namespace Fintech.Correntista.Wpf
             throw new NotImplementedException();
         }
 
-        private void contaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async /*Task*/ void contaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mainSpinner.Visibility = Visibility.Visible;
+
             if (contaComboBox.SelectedIndex == -1) return;
 
             var conta = /*(Conta)*/contaComboBox.SelectedItem as Conta;
 
-            conta.Movimentos = repositorio.Selecionar(conta.Agencia.Numero, conta.Numero);
+            //conta.Movimentos = repositorio.Selecionar(conta.Agencia.Numero, conta.Numero);
+            conta.Movimentos = await repositorio.SelecionarAsync(conta.Agencia.Numero, conta.Numero);
 
             movimentacaoDataGrid.ItemsSource = conta.Movimentos;
             saldoTextBox.Text = conta.Saldo.ToString();
+
+            mainSpinner.Visibility = Visibility.Hidden;
         }
 
         private void incluirOperacaoButton_Click(object sender, RoutedEventArgs e)
