@@ -1,8 +1,9 @@
 ﻿using Fintech.Dominio;
+using Fintech.Dominio.Interfaces;
 
 namespace Fintech.Repositorios.SistemaArquivos
 {
-    public class MovimentoRepositorio
+    public class MovimentoRepositorio : IMovimentoRepositorio
     {
         public MovimentoRepositorio(string caminho)
         {
@@ -53,7 +54,7 @@ namespace Fintech.Repositorios.SistemaArquivos
                     movimento.Guid = guid;
                     movimento.Data = data;
 
-                    movimentos.Add(movimento); 
+                    movimentos.Add(movimento);
                 }
             }
 
