@@ -2,11 +2,25 @@
 {
     public class Movimento
     {
+        /// <summary>
+        /// Construtor vazio por requisito do Dapper.
+        /// </summary>
+        public Movimento() // ToDo: OO - polimorfismo (sobrecarga).
+        {
+
+        }
+
         public Movimento(decimal valor, Operacao operacao)
         {
             Valor = valor;
             Operacao = operacao;
         }
+
+        //public Movimento(Operacao operacao, decimal valor)
+        //{
+        //    Valor = valor;
+        //    Operacao = operacao;
+        //}
 
         public int Id { get; set; }
         public Guid Guid { get; set; } = Guid.NewGuid();

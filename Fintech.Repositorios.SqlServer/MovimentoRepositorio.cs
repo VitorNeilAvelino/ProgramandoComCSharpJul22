@@ -1,4 +1,5 @@
-﻿using Fintech.Dominio;
+﻿using Dapper;
+using Fintech.Dominio;
 using Fintech.Dominio.Interfaces;
 using System.Data.SqlClient;
 
@@ -20,13 +21,21 @@ namespace Fintech.Repositorios.SqlServer
 
             using (var conexao = new SqlConnection(stringConexao)) // using: descarte seguro de memória.
             {
-
+                conexao.Execute(instrucao, movimento);
             }
         }
 
-        public Task<List<Movimento>> SelecionarAsync(int numeroAgencia, int numeroConta)
+        public async Task<List<Movimento>> SelecionarAsync(int numeroAgencia, int numeroConta)
         {
-            throw new NotImplementedException();
+            var instrucao = @"Select Data, Operacao, Valor from Movimento
+                                            where IdConta=@numeroConta";
+
+            using (var conexao = new SqlConnection(stringConexao))
+            {
+                var movimentos = await conexao.QueryAsync<Movimento>(instrucao, new { numeroConta });
+
+                return movimentos.ToList();
+            }
         }
     }
 }

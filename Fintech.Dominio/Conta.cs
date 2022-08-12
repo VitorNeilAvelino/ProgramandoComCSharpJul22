@@ -13,7 +13,7 @@
         public Agencia? Agencia { get; set; }// = new Agencia();
         public Cliente? Cliente { get; set; }// = new Cliente();
         public List<Movimento> Movimentos { get; set; } = new List<Movimento>();
-        public decimal TotalDepositos 
+        public decimal TotalDepositos  // ToDo: OO - encapsulamento.
         {
             get 
             {

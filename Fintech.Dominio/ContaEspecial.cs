@@ -9,6 +9,7 @@
 
         public decimal Limite { get; set; }
 
+        // ToDo: OO - polimorfismo (sobrescrita).
         public override Movimento EfetuarOperacao(decimal valor, Operacao operacao, decimal limite = 0)
         {
             return base.EfetuarOperacao(valor, operacao, Limite);

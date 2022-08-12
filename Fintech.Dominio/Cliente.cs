@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class Cliente
+    public class Cliente // ToDo: OO - abstração (classe).
     {
         ///// <summary>
         ///// 
