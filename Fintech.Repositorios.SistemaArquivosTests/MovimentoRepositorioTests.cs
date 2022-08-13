@@ -139,11 +139,14 @@ namespace Fintech.Repositorios.SistemaArquivos.Tests
         }
 
         [TestMethod]
-        public void SkipTakeTeste()
+        [DataRow(1, 50)]
+        [DataRow(2, 50)]
+        [DataRow(3, 50)]
+        public void SkipTakeTeste(int pagina, int registrosPorPagina)
         {
             var movimentos = repositorio.Selecionar(123, 526)
-                .Skip(1)
-                .Take(10)
+                .Skip((pagina - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
                 .ToList();
 
             Assert.IsTrue(movimentos.Count == 2);
