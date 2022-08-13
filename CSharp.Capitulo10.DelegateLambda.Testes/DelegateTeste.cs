@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CSharp.Capitulo10.DelegateLambda.Testes
 {
     [TestClass]
@@ -11,6 +12,30 @@ namespace CSharp.Capitulo10.DelegateLambda.Testes
             var operacao = Calculadora.ObterOperacao(tipoOperacao);
             
             Assert.IsTrue(operacao(x, y) == resultado);
+        }
+
+        [TestMethod]
+        public void MetodoAnonimoTeste()
+        {
+            EfetuarOperacao divisao = delegate (int x, int y)
+            {
+                return x / y;
+            };
+
+            Assert.IsTrue(divisao(6, 3) == 2);
+        }
+
+        [TestMethod]
+        public void ExpressaoLambdaTeste()
+        {
+            //EfetuarOperacao multiplicacao = (x, y) =>
+            //{
+            //    return x * y;
+            //};
+
+            EfetuarOperacao multiplicacao = (x, y) => x * y;
+
+            Assert.IsTrue(multiplicacao(6, 3) == 18);
         }
     }
 }
